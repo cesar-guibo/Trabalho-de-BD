@@ -7,16 +7,16 @@ SELECT 'drop sequence ' || sequence_name FROM user_sequences;
 */
 
 
+
 /* tabela esporte */
 CREATE TABLE ESPORTE (
 	nome varchar(30),
-	descricao varchar(200),
+	descricao varchar(500),
 	
 	CONSTRAINT PK_ESPORTE PRIMARY KEY(nome)
 );
 
 /* tabela campeonato */
-
 CREATE TABLE CAMPEONATO(
 	nome varchar(30),
 	ano number(4) DEFAULT 2021,
@@ -27,8 +27,6 @@ CREATE TABLE CAMPEONATO(
 );
 
 /* tabela usuário*/
-
-/* fazer conferência com regex pra cpf ser número */
 CREATE TABLE USUARIO(
 	nickname varchar(15),
 	email varchar(50) NOT NULL,
@@ -38,7 +36,8 @@ CREATE TABLE USUARIO(
 	
 	
 	CONSTRAINT PK_USUARIO PRIMARY KEY(nickname),
-	CONSTRAINT UN_USUARIO_CPF UNIQUE(cpf)
+	CONSTRAINT UN_USUARIO_CPF UNIQUE(cpf),
+    CONSTRAINT CK_CPF CHECK(REGEXP_LIKE(CPF, '[0-9]{11}'))
 );
 
 CREATE SEQUENCE seq_id_clube
