@@ -10,4 +10,14 @@ INSERT INTO CAMPEONATO (NOME, ANO, ORGANIZADOR) VALUES ('Campeonato Brasileiro',
 INSERT INTO USUARIO (NICKNAME, EMAIL, NOME, CPF, SENHA) VALUES ('LeoF', 'leo@hotmail.com', 'Leonardo', '10236958966', '123456789');
 INSERT INTO USUARIO (NICKNAME, EMAIL, NOME, CPF, SENHA) VALUES ('Cleiton', 'cleiton@hotmail.com', 'Cleiton', '10236958967', '123456789');
 
+INSERT INTO CLUBE (idClube, cadastroEmpresarial, pais, uf, nomeDoClube, cor1, cor2,	cor3) VALUES ('1', '00000000000', 'Brasil', 'SP', 'São Paulo FC', 'Vermelho', 'Preto', 'Branco' );
+INSERT INTO CLUBE (idClube, cadastroEmpresarial, pais, uf, nomeDoClube, cor1, cor2) VALUES ('2', '00000000001', 'Brasil', 'SP', 'SE Palmeiras', 'Verde', 'Branco');
+
+INSERT INTO ROTEIROVIAGEM (AUTOR, NOME_ROTEIRO, DESCRICAO) VALUES ('LeoF', 'Roteiro 1', 'Roteiro legal');
+INSERT INTO ROTEIROVIAGEM (AUTOR, NOME_ROTEIRO, DESCRICAO) VALUES ('LeoF', 'Roteiro 2', 'Roteiro chato');
+
+INSERT INTO HOSPEDAGEM (NOME, CODIGOPOSTAL, PRECO, UF, CIDADE, BAIRRO, LOGRADOURO, NUMERO, PAIS) VALUES ('Atibainha', '00000000000', '500.00', 'SP', 'Atibaia', 'Bairro 1', 'Rua 1', '0', 'Brasil');
+INSERT INTO HOSPEDAGEM (NOME, CODIGOPOSTAL, PRECO, UF, CIDADE, BAIRRO, LOGRADOURO, NUMERO, PAIS) VALUES ('Bourbon', '00000000002', '1000.00', 'SP', 'Atibaia', 'Bairro 5', 'Rua 8', '500', 'Brasil');
+
+
 COMMIT;

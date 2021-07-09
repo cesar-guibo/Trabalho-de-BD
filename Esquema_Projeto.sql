@@ -34,10 +34,9 @@ CREATE TABLE USUARIO(
 	cpf char(11) NOT NULL,
 	senha varchar(20) NOT NULL,
 	
-	
 	CONSTRAINT PK_USUARIO PRIMARY KEY(nickname),
 	CONSTRAINT UN_USUARIO_CPF UNIQUE(cpf),
-    CONSTRAINT CK_CPF CHECK(REGEXP_LIKE(CPF, '[0-9]{11}'))
+    CONSTRAINT CK_USUARIO_CPF CHECK(REGEXP_LIKE(CPF, '[0-9]{11}'))
 );
 
 CREATE SEQUENCE seq_id_clube
@@ -47,7 +46,6 @@ INCREMENT BY 1
 CACHE 20;
 
 /* tabela clube */
-/* fazer conferência com regex para cadastroEmpresarial*/
 CREATE TABLE CLUBE(
 	idClube NUMBER(4),
 	cadastroEmpresarial varchar(11) NOT NULL,
@@ -60,12 +58,14 @@ CREATE TABLE CLUBE(
 	
 	
 	CONSTRAINT PK_CLUBE PRIMARY KEY(idClube),
-	CONSTRAINT UN_CLUBE UNIQUE(cadastroEmpresarial,pais,uf)
-
+	CONSTRAINT UN_CLUBE UNIQUE(cadastroEmpresarial,pais,uf),
+    CONSTRAINT CK_CLUBE_CNPJ CHECK(REGEXP_LIKE(cadastroEmpresarial, '[0-9]{11}'))
 );
 
 /* tabela roteiro de viagem */
 /* achei q fica melhor trocar roteiro codigo roteiro para nome roteiro */
+/* Acho melhor manter codigo */
+
 CREATE TABLE RoteiroViagem(
 	autor varchar(15),
 	nome_roteiro varchar(11),
@@ -78,11 +78,10 @@ CREATE TABLE RoteiroViagem(
 );
 
 /* tabela hospedagem */
-/*conferir com regex se codigo postal é numero*/
 CREATE TABLE Hospedagem(
 	nome varchar(20), 
 	codigoPostal varchar(11),
-	preco NUMBER(4,2) NOT NULL ,
+	preco NUMBER(7,2) NOT NULL ,
 	uf char(2) NOT NULL ,
 	cidade varchar(30) NOT NULL,
 	bairro varchar(30) NOT NULL,
@@ -96,6 +95,7 @@ CREATE TABLE Hospedagem(
 	
 	/*conferindo se o preço é maior que zero */
 	CONSTRAINT CK_PRECO_HOSPEDAGEM CHECK(preco >= 0.0)
+    CONSTRAINT CK_HOSPEDAGEM_CEP CHECK(REGEXP_LIKE(codigoPostal, '[0-9]{11}'))
 	
 	
 );
