@@ -238,7 +238,6 @@ CREATE TABLE PontoTuristico(
 
 
 /* tabela treinadores de um time */
-/* regex no cpf */
 /* aqui eu alterei a chave primária pois íamos ter problemas de inconsistência,
  * alterar no projeto lógico
  */
@@ -248,7 +247,8 @@ CREATE TABLE TreinadoresTime(
 	idTime number(4) NOT NULL,
 	
 	CONSTRAINT PK_TREINADORES PRIMARY KEY(cpf),
-	CONSTRAINT FK_TREINA_TIME FOREIGN KEY(idTime) REFERENCES Time(idTime) ON DELETE CASCADE
+	CONSTRAINT FK_TREINA_TIME FOREIGN KEY(idTime) REFERENCES Time(idTime) ON DELETE CASCADE,
+    CONSTRAINT CK_TREINADOR_CPF CHECK(REGEXP_LIKE(CPF, '[0-9]{11}'))
 
 );
 
@@ -268,7 +268,8 @@ CREATE TABLE AtletaTime(
 	peso number(4,1),
 	
 	CONSTRAINT PK_ATLETAS PRIMARY KEY(cpf),
-	CONSTRAINT FK_ATLETA_TIME FOREIGN KEY(idTime) REFERENCES Time(idTime) ON DELETE CASCADE
+	CONSTRAINT FK_ATLETA_TIME FOREIGN KEY(idTime) REFERENCES Time(idTime) ON DELETE CASCADE,
+    CONSTRAINT CK_ATLETA_CPF CHECK(REGEXP_LIKE(CPF, '[0-9]{11}'))
 );
 
 
@@ -301,13 +302,13 @@ CREATE TABLE RoteiroPontoTuristico(
 	codigoPostalPonto varchar(11),
 	
 	/*mudar no esquema*/
-	qtd_ingressos number(2),
+	qtdIngressos number(2),
 	
 	CONSTRAINT PK_ROTEIRO_PONTO_TURISTICO PRIMARY KEY(autorRoteiro,nomeRoteiro,nomePonto,codigoPostalPonto),
 	CONSTRAINT FK_ROTEIRO_PONTO_R FOREIGN KEY (autorRoteiro,nomeRoteiro) REFERENCES RoteiroViagem(autor,nome_roteiro) ON DELETE CASCADE,
 	CONSTRAINT FK_ROTEIRO_PONTO_P FOREIGN KEY (nomePonto,codigoPostalPonto) REFERENCES PontoTuristico(nome,codigoPostal) ON DELETE CASCADE,
 	
-	CONSTRAINT CK_QTD_ROTEIRO CHECK( qtd_ingressos >=1 )
+	CONSTRAINT CK_QTD_ROTEIRO CHECK( qtdIngressos >=1 )
 
 	
 );
@@ -320,12 +321,12 @@ CREATE TABLE RoteiroTransporte(
 	codigoPostalDestino varchar(11),
 	
 	/*mudar no esquema*/
-	qtd_ingressos number(2),
+	qtdIngressos number(2),
 	
 	CONSTRAINT PK_ROTEIRO_TRANSPORTE PRIMARY KEY(autorRoteiro,nomeRoteiro, nomeEmpresaTransporte, codigoPostalOrigem , codigoPostalDestino),
 	CONSTRAINT FK_ROTEIRO_TRANSPORTE_R FOREIGN KEY (autorRoteiro,nomeRoteiro) REFERENCES RoteiroViagem(autor,nome_roteiro) ON DELETE CASCADE,
 	CONSTRAINT FK_ROTEIRO_TRANSPORTE_T FOREIGN KEY (nomeEmpresaTransporte,codigoPostalOrigem,codigoPostalDestino) REFERENCES Transporte(nomeDaEmpresa,codigoPostalOrigem,codigoPostalDestino) ON DELETE CASCADE,
-	CONSTRAINT CK_QTD_ROTEIRO_T CHECK( qtd_ingressos >=1 )
+	CONSTRAINT CK_QTD_ROTEIRO_T CHECK( qtdIngressos >=1 )
 
 );
 
@@ -335,11 +336,11 @@ CREATE TABLE RoteiroPartida(
 	partida varchar(5),
 	
 	/*mudar no esquema*/
-	qtd_ingressos number(2),
+	qtdIngressos number(2),
 	
 	CONSTRAINT PK_ROTEIRO_PARTIDA PRIMARY KEY(autorRoteiro,nomeRoteiro, partida),
 	CONSTRAINT FK_ROTEIRO_PARTIDA_R FOREIGN KEY (autorRoteiro,nomeRoteiro) REFERENCES RoteiroViagem(autor,nome_roteiro) ON DELETE CASCADE,
 	CONSTRAINT FK_ROTEIRO_PARTIDA_P FOREIGN KEY (partida) REFERENCES Partida(codigoPartida) ON DELETE CASCADE,
-	CONSTRAINT CK_QTD_ROTEIRO_P CHECK( qtd_ingressos >=1 )
+	CONSTRAINT CK_QTD_ROTEIRO_P CHECK( qtdIngressos >=1 )
 );
 
