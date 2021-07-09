@@ -2,6 +2,7 @@
 /* Limpando o DB   */
 
 /*
+
 SELECT 'drop table ' || table_name||' cascade constraints;' FROM user_tables; 
 SELECT 'drop sequence ' || sequence_name FROM user_sequences;
 */
@@ -50,7 +51,7 @@ CREATE TABLE CLUBE(
 	idClube NUMBER(4),
 	cadastroEmpresarial varchar(11) NOT NULL,
 	pais varchar(20) NOT NULL,
-	uf char(2) NOT NULL,
+	uf char(2),
 	nomeDoClube varchar(30) NOT NULL,
 	cor1 varchar(15) NOT NULL ,
 	cor2 varchar(15),
@@ -82,9 +83,9 @@ CREATE TABLE Hospedagem(
 	nome varchar(20), 
 	codigoPostal varchar(11),
 	preco NUMBER(7,2) NOT NULL ,
-	uf char(2) NOT NULL ,
+	uf char(2),
 	cidade varchar(30) NOT NULL,
-	bairro varchar(30) NOT NULL,
+	bairro varchar(30),
 	logradouro varchar(30) NOT NULL,
 	numero varchar(5) NOT NULL,
 	complemento varchar(5),
@@ -95,8 +96,6 @@ CREATE TABLE Hospedagem(
 	
 	/*conferindo se o preço é maior que zero */
 	CONSTRAINT CK_PRECO_HOSPEDAGEM CHECK(preco >= 0.0)
-    CONSTRAINT CK_HOSPEDAGEM_CEP CHECK(REGEXP_LIKE(codigoPostal, '[0-9]{11}'))
-	
 	
 );
 
@@ -107,21 +106,21 @@ CREATE TABLE Transporte(
 	nomeDaEmpresa varchar(20),
 	codigoPostalOrigem varchar(11),
 	codigoPostalDestino varchar(11),
-	preco NUMBER(4,2) NOT NULL,
+	preco NUMBER(6,2) NOT NULL,
 	
 	
-	origemUf char(2) NOT NULL ,
+	origemUf char(2),
 	origemCidade varchar(30) NOT NULL,
-	origemBairro varchar(30) NOT NULL,
+	origemBairro varchar(30),
 	origemLogradouro varchar(30) NOT NULL,
 	origemNumero varchar(5) NOT NULL,
 	origemComplemento varchar(5),
 	origemPontoDeReferencia varchar(30),
 	origemPais varchar(20) NOT NULL,
 	
-	destinoUf char(2) NOT NULL ,
+	destinoUf char(2),
 	destinoCidade varchar(30) NOT NULL,
-	destinoBairro varchar(30) NOT NULL,
+	destinoBairro varchar(30),
 	destinoLogradouro varchar(30) NOT NULL,
 	destinoNumero varchar(5) NOT NULL,
 	destinoComplemento varchar(5),
@@ -136,15 +135,13 @@ CREATE TABLE Transporte(
 	/*confere se o preço é maior que zero */
 	
 	CONSTRAINT CK_PRECO_TRANSPORTE CHECK(preco >= 0)
-
 );
-
 
 /*tabela time*/
 CREATE TABLE TIME(
 	idTime NUMBER(4),
 	nomeFantasia varchar(30) NOT NULL,
-	categoria varchar(10) NOT NULL,
+	categoria varchar(15) NOT NULL,
 	idClube number(4) NOT NULL,
 	nomeEsporte varchar(30) NOT NULL,
 	
@@ -166,11 +163,11 @@ CREATE TABLE Partida(
 	codigoPartida varchar(5),
 	juiz varchar(20),
 	DATA DATE NOT NULL,
-	preco number(4,2) NOT NULL,
+	preco number(6,2) NOT NULL,
 	
-	uf char(2) NOT NULL ,
+	uf char(2),
 	cidade varchar(30) NOT NULL,
-	bairro varchar(30) NOT NULL,
+	bairro varchar(30),
 	logradouro varchar(30) NOT NULL,
 	numero varchar(5) NOT NULL,
 	complemento varchar(5),
@@ -204,7 +201,6 @@ CREATE TABLE PartidaTime(
 );
 
 /*tabela ponto turistico*/
-/*fazer conferência em regex do codigoPostal*/
 CREATE TABLE PontoTuristico(
 	nome varchar(20),
 	codigoPostal varchar(11),
@@ -215,9 +211,9 @@ CREATE TABLE PontoTuristico(
 	/*armazena o caminho para a imagem no servidor*/
 	foto varchar(20),
 	
-	uf char(2) NOT NULL ,
+	uf char(2),
 	cidade varchar(30) NOT NULL,
-	bairro varchar(30) NOT NULL,
+	bairro varchar(30),
 	logradouro varchar(30) NOT NULL,
 	numero varchar(5) NOT NULL,
 	complemento varchar(5),
