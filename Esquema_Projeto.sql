@@ -8,7 +8,6 @@ SELECT 'drop sequence ' || sequence_name FROM user_sequences;
 */
 
 
-
 /* tabela esporte */
 CREATE TABLE ESPORTE (
 	nome varchar(30),
@@ -343,4 +342,3 @@ CREATE TABLE RoteiroPartida(
 	CONSTRAINT FK_ROTEIRO_PARTIDA_P FOREIGN KEY (partida) REFERENCES Partida(codigoPartida) ON DELETE CASCADE,
 	CONSTRAINT CK_QTD_ROTEIRO_P CHECK( qtdIngressos >=1 )
 );
-
