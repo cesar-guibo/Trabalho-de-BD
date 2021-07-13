@@ -4,8 +4,33 @@
 /*
 
 SELECT 'drop table ' || table_name||' cascade constraints;' FROM user_tables; 
-SELECT 'drop sequence ' || sequence_name FROM user_sequences;
+
+
+
+drop table ESPORTE cascade constraints;
+drop table CAMPEONATO cascade constraints;
+drop table USUARIO cascade constraints;
+drop table CLUBE cascade constraints;
+drop table ROTEIROVIAGEM cascade constraints;
+drop table HOSPEDAGEM cascade constraints;
+drop table TRANSPORTE cascade constraints;
+drop table TIME cascade constraints;
+drop table PARTIDA cascade constraints;
+drop table PARTIDATIME cascade constraints;
+drop table PONTOTURISTICO cascade constraints;
+drop table TREINADORESTIME cascade constraints;
+drop table ATLETATIME cascade constraints;
+drop table USUARIOACOMPANHAESPORTE cascade constraints;
+drop table USUARIOTORCE cascade constraints;
+drop table ROTEIROPONTOTURISTICO cascade constraints;
+drop table ROTEIROTRANSPORTE cascade constraints;
+drop table ROTEIROPARTIDA cascade constraints;
+
+drop sequence SEQ_ID_CLUBE;
+drop sequence SEQ_ID_TIME;
+
 */
+
 
 
 /* tabela esporte */
@@ -42,8 +67,7 @@ CREATE TABLE USUARIO(
 CREATE SEQUENCE seq_id_clube
 MINVALUE 0
 START WITH 0
-INCREMENT BY 1
-CACHE 20;
+INCREMENT BY 1;
 
 /* tabela clube */
 CREATE TABLE CLUBE(
@@ -145,14 +169,14 @@ CREATE TABLE TIME(
 	nomeEsporte varchar(30) NOT NULL,
 	
 	CONSTRAINT PK_TIME PRIMARY KEY(idTime),
+	CONSTRAINT FK_TIME_CLUBE FOREIGN KEY(idClube) REFERENCES CLUBE(idClube),
 	CONSTRAINT UN_TIME UNIQUE(nomeFantasia,categoria,idClube,nomeEsporte)
 );
 
 CREATE SEQUENCE seq_id_time
 MINVALUE 0
 START WITH 0
-INCREMENT BY 1
-CACHE 20;
+INCREMENT BY 1;
 
 
 /* tabela partida */
