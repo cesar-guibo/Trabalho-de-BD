@@ -112,3 +112,10 @@ INNER JOIN ATLETATIME A ON T.IDTIME = A.IDTIME
 WHERE P.CODIGOPARTIDA LIKE ('1');
 
 
+
+/**
+ * Selecionar todos os times cuja torcida gastou mais do que determinado valor X
+ * 
+ */
+
+
