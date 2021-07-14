@@ -353,6 +353,22 @@ CREATE TABLE RoteiroTransporte(
 
 );
 
+CREATE TABLE RoteiroHospedagem(
+	autorRoteiro varchar(15),
+	nomeRoteiro varchar(11),
+	nomeHospedagem varchar(20),
+	codigoPostal varchar(11),
+	
+	/*mudar no esquema*/
+	qtdIngressos number(2),
+	
+	CONSTRAINT PK_ROTEIRO_HOSPEDAGEM PRIMARY KEY(autorRoteiro,nomeRoteiro, nomeHospedagem, codigoPostal),
+	CONSTRAINT FK_ROTEIRO_HOSPEDAGEM_R FOREIGN KEY (autorRoteiro,nomeRoteiro) REFERENCES RoteiroViagem(autor,nome_roteiro) ON DELETE CASCADE,
+	CONSTRAINT FK_ROTEIRO_HOSPEDAGEM_H FOREIGN KEY (nomeHospedagem,codigoPostal) REFERENCES Hospedagem(nome,codigoPostal) ON DELETE CASCADE,
+	CONSTRAINT CK_QTD_ROTEIRO_H CHECK( qtdIngressos >=1 )
+
+);
+
 CREATE TABLE RoteiroPartida(
 	autorRoteiro varchar(15),
 	nomeRoteiro varchar(11),

@@ -5,7 +5,7 @@
  */
 
 
-SELECT * FROM USUARIO u INNER JOIN ROTEIROVIAGEM r ON u.nickname = r.autor WHERE r.nome_roteiro = 'Roteiro 1' AND u.nickname = 'LeoF' AND u.senha = '123456789'
+SELECT * FROM USUARIO u INNER JOIN ROTEIROVIAGEM r ON u.nickname = r.autor WHERE r.nome_roteiro = 'Roteiro 1' AND u.nickname = 'LeoF' AND u.senha = '123456789';
 
 
 /**
@@ -15,7 +15,7 @@ SELECT * FROM USUARIO u INNER JOIN ROTEIROVIAGEM r ON u.nickname = r.autor WHERE
  * 
  */
 
-SELECT u.NICKNAME,u.NOME,r.NOME_ROTEIRO FROM USUARIO u LEFT JOIN ROTEIROVIAGEM r ON u.NICKNAME = r.AUTOR WHERE upper(u.nome) LIKE 'L%'
+SELECT u.NICKNAME,u.NOME,r.NOME_ROTEIRO FROM USUARIO u LEFT JOIN ROTEIROVIAGEM r ON u.NICKNAME = r.AUTOR WHERE upper(u.nome) LIKE 'L%';
 
 
 /* 3. no contexto de viagem internacional, um turista pode se interessar pelos clubes de um país, assim deve ser selecionado para um dado país
@@ -26,7 +26,7 @@ SELECT u.NICKNAME,u.NOME,r.NOME_ROTEIRO FROM USUARIO u LEFT JOIN ROTEIROVIAGEM r
 SELECT t.NOMEFANTASIA, t.CATEGORIA,t.NOMEESPORTE ,a.NOME 
 FROM CLUBE c
 INNER JOIN "TIME" t ON c.IDCLUBE = t.IDCLUBE
-LEFT JOIN ATLETATIME a ON t.IDTIME = a.IDTIME;
+LEFT JOIN ATLETATIME a ON t.IDTIME = a.IDTIME
 WHERE upper(c.pais) = 'BRASIL';
 
 
@@ -54,7 +54,23 @@ UNION SELECT p2.PAIS,p2.PRECO AS PRECO, 'PARTIDA' AS tipo FROM PARTIDA p2)
 GROUP BY pais,tipo ORDER BY pais;
 
 
+/*
+ * 6. Pesquisa todas as partidas em que um atleta atuará, uma vez que é comum um torcedor ser fã de um jogador e querer assistir uma partida 
+ * por conta dele, independente do time.
+ */
+ 
+ SELECT A.NOME FROM ATLETATIME A WHERE UPPER(A.NOME) LIKE ('DANIEL ALVES');
+ 
+ SELECT A.NOME, T.NOMEFANTASIA FROM ATLETATIME A INNER JOIN TIME T ON T.IDTIME = A.IDTIME WHERE UPPER(A.NOME) LIKE ('DANIEL ALVES');
 
+ SELECT A.NOME, T.NOMEFANTASIA, PT.PARTIDA FROM ATLETATIME A INNER JOIN TIME T ON T.IDTIME = A.IDTIME INNER JOIN PARTIDATIME PT ON T.IDTIME = PT.IDTIME WHERE UPPER(A.NOME) LIKE ('DANIEL ALVES');
+
+SELECT A.NOME, T.NOMEFANTASIA, P.PAIS, P.DATA
+FROM ATLETATIME A 
+INNER JOIN TIME T ON T.IDTIME = A.IDTIME 
+INNER JOIN PARTIDATIME PT ON T.IDTIME = PT.IDTIME 
+INNER JOIN PARTIDA P ON PT.PARTIDA = P.CODIGOPARTIDA
+WHERE UPPER(A.NOME) LIKE ('DANIEL ALVES');
 
 /*
  * 7. ideia para pesquisa com divisão: consultar todos os roteiros que possuem todas as partidas do phoenix suns na nba(playoffs) de 2021
@@ -82,5 +98,17 @@ NOT EXISTS (
 				
 )
 
+/*
+ * 8. Lista todos os atletas envolvidos em uma determinada partida.
+ * O usuario pode buscar mais informacoes sobre uma partida que o interessa e,
+ * com essa consulta, pode saber todos os atletas que participarão.
+ */
+ 
+SELECT A.NOME, T.NOMEFANTASIA
+FROM PARTIDA P
+INNER JOIN PARTIDATIME PT ON PT.PARTIDA = P.CODIGOPARTIDA
+INNER JOIN TIME T ON T.IDTIME = PT.IDTIME 
+INNER JOIN ATLETATIME A ON T.IDTIME = A.IDTIME
+WHERE P.CODIGOPARTIDA LIKE ('1');
 
 
