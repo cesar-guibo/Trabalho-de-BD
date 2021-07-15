@@ -5,30 +5,6 @@
 
 SELECT 'drop table ' || table_name||' cascade constraints;' FROM user_tables; 
 
-
-
-drop table ESPORTE cascade constraints;
-drop table CAMPEONATO cascade constraints;
-drop table USUARIO cascade constraints;
-drop table CLUBE cascade constraints;
-drop table ROTEIRO_VIAGEM cascade constraints;
-drop table HOSPEDAGEM cascade constraints;
-drop table TRANSPORTE cascade constraints;
-drop table TIME cascade constraints;
-drop table PARTIDA cascade constraints;
-drop table PARTIDA_TIME cascade constraints;
-drop table PONTO_TURISTICO cascade constraints;
-drop table TREINADORES_TIME cascade constraints;
-drop table ATLETA_TIME cascade constraints;
-drop table USUARIO_ACOMPANHA_ESPORTE cascade constraints;
-drop table USUARIO_TORCE cascade constraints;
-drop table ROTEIROPONTO_TURISTICO cascade constraints;
-drop table ROTEIRO_TRANSPORTE cascade constraints;
-drop table ROTEIRO_PARTIDA cascade constraints;
-
-drop sequence SEQ_ID_CLUBE;
-drop sequence SEQ_ID_TIME;
-
 */
 
 
