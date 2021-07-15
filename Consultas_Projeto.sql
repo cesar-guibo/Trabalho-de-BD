@@ -44,9 +44,6 @@ WHERE UPPER(P.NOME_CAMPEONATO) = 'MUNDIAL DE CLUBES' AND P.ANO_CAMPEONATO = 2021
 /*5. para cada país exibir o preço medio de suas atrações turisticas, separadas por ponto turistico e partida
  */
 
-SELECT P.PAIS, P.PRECO AS PRECO,'PONTO' AS TIPO  FROM PONTO_TURISTICO P;
-
-SELECT P2.PAIS,P2.PRECO AS PRECO,'PARTIDA' AS TIPO FROM PARTIDA P2;
 
 SELECT PAIS,TIPO,AVG(PRECO) FROM 
 (SELECT P.PAIS, P.PRECO AS PRECO, 'PONTO' AS TIPO FROM PONTO_TURISTICO P 
@@ -70,14 +67,6 @@ WHERE UPPER(A.NOME) LIKE ('DANIEL ALVES');
 /*
  * 7. ideia para pesquisa com divisão: consultar todos os roteiros que possuem todas as partidas do phoenix suns na nba(playoffs) de 2021
  */
-
-/*consulta para saber todas as partidas jogadas pelo time phoenix sun, id = 4
-SELECT * FROM PARTIDA p WHERE upper(p.NOME_CAMPEONATO) = 'PLAYOFFS NBA' AND p.ANO_CAMPEONATO = '2021';*/
-
-SELECT * FROM  PARTIDA_TIME P2 INNER JOIN PARTIDA P ON P2.PARTIDA = P.CODIGO_PARTIDA WHERE P2.ID_TIME = 4 AND UPPER(P.NOME_CAMPEONATO) = 'PLAYOFFS NBA' AND P.ANO_CAMPEONATO = '2021';
-
-SELECT * FROM ROTEIRO_PARTIDA R WHERE R.AUTOR_ROTEIRO = 'LeoF' AND R.NOME_ROTEIRO = 'Roteiro 1';
-
 
 SELECT R.AUTOR ,R.NOME_ROTEIRO ,R.DESCRICAO FROM ROTEIRO_VIAGEM R WHERE
 NOT EXISTS (
@@ -161,10 +150,26 @@ HAVING count(*)>1;
 
 
 /**
- * 11. Selecionar os Usuários que torcem para todos os times de um clube
+ * 11. Selecionar os Usuários que torcem para todos os times de algum  clube - os torcedores mais fiéis!
  */
 
 
+
+
+SELECT u1.NICKNAME,u1.NOME, t1.NOME_FANTASIA AS Nome_Time, c1.NOME_DO_CLUBE FROM
+USUARIO u1 INNER JOIN USUARIO_TORCE ut1 ON u1.NICKNAME = ut1.USUARIO
+INNER JOIN TIME t1 ON ut1.ID_TIME = t1.ID_TIME 
+INNER JOIN CLUBE c1 ON c1.ID_CLUBE = t1.ID_CLUBE
+WHERE 
+(SELECT count(*) FROM
+USUARIO_TORCE u INNER JOIN "TIME" t ON u.ID_TIME = t.ID_TIME
+INNER JOIN CLUBE c ON c.ID_CLUBE = t.ID_CLUBE 
+WHERE u.USUARIO = u1.NICKNAME  AND c.ID_CLUBE = c1.ID_CLUBE
+GROUP BY u.USUARIO,c.ID_CLUBE,c.NOME_DO_CLUBE) = 
+(SELECT count(*) FROM
+CLUBE c INNER JOIN "TIME" t ON c.ID_CLUBE = t.ID_CLUBE
+WHERE c.ID_CLUBE = c1.ID_CLUBE
+GROUP BY c.ID_CLUBE);
 
 /**
  * 12. Selecionar para cada país os Pontos Turístico relacionados com preço abaixo da média de seu país
