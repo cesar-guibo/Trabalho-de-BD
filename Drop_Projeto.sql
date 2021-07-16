@@ -18,5 +18,5 @@ drop table ROTEIRO_TRANSPORTE cascade constraints;
 drop table ROTEIRO_HOSPEDAGEM cascade constraints;
 drop table ROTEIRO_PARTIDA cascade constraints;
 
-drop table SEQ_ID_CLUBE;
-drop table SEQ_ID_TIME;
+drop sequence SEQ_ID_CLUBE;
+drop sequence SEQ_ID_TIME;
